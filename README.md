@@ -63,11 +63,6 @@ This mini project is designed for practicing and mastering SQL subqueries — fr
 ## 👨‍💻 Author
 
 **Akash Jishnu Vasudevan**  
-Learning to become a Data Analyst 💼
 
----
 
-## 📈 Progress Chart
-
-![progress](progress_chart.png) <!-- You can upload your visual tracker here later -->
 
