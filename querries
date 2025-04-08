@@ -1,0 +1,80 @@
+🧠 SUBQUERY TASKS --
+
+-- TASK 1: Students who have grades
+SELECT name
+FROM students
+WHERE student_id IN (SELECT student_id FROM grades);
+
+-- TASK 2: Students who don't have any grades
+SELECT name
+FROM students
+WHERE student_id NOT IN (SELECT student_id FROM grades);
+
+-- TASK 3: Akash's scores by subject
+SELECT subject, score AS akash_scores
+FROM grades
+WHERE student_id = (SELECT student_id FROM students WHERE name = 'Akash');
+
+-- TASK 4: Students scoring above overall average
+SELECT name
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+WHERE g.score > (SELECT AVG(score) FROM grades);
+
+-- TASK 5: Students scoring more than Meera
+SELECT name
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+WHERE g.score > (
+    SELECT score
+    FROM grades g2
+    JOIN students s2 ON g2.student_id = s2.student_id
+    WHERE s2.name = 'Meera'
+);
+
+-- TASK 6: Subjects where a student has multiple scores
+SELECT DISTINCT subject
+FROM grades
+GROUP BY subject, student_id
+HAVING COUNT(*) > 1;
+
+-- TASK 7: Students with highest scores in any subject
+SELECT name
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+WHERE score IN (
+    SELECT MAX(score)
+    FROM grades
+    GROUP BY subject
+);
+
+-- TASK 8: Students with more than one grade and their average
+SELECT name, AVG(score) AS avg_score
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+GROUP BY name
+HAVING COUNT(*) > 1;
+
+-- TASK 9: Students scoring above their subject's average
+SELECT name
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+WHERE g.score > (
+    SELECT AVG(score)
+    FROM grades
+    WHERE subject = g.subject
+);
+
+-- TASK 10: Student(s) with the highest overall average score
+SELECT name, AVG(score) AS avg_score
+FROM students s
+JOIN grades g ON s.student_id = g.student_id
+GROUP BY name
+HAVING AVG(score) = (
+    SELECT MAX(avg_score)
+    FROM (
+        SELECT AVG(score) AS avg_score
+        FROM grades
+        GROUP BY student_id
+    ) AS sub
+);
