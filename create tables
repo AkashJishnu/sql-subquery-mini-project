@@ -1,0 +1,38 @@
+
+-- DROP TABLES IF THEY EXIST
+DROP TABLE IF EXISTS grades;
+DROP TABLE IF EXISTS students;
+
+-- CREATE TABLES
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE grades (
+    grade_id INT PRIMARY KEY,
+    student_id INT,
+    subject VARCHAR(50),
+    score INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
+);
+
+-- INSERT SAMPLE DATA
+INSERT INTO students (student_id, name) VALUES
+(1, 'Akash'),
+(2, 'Meera'),
+(3, 'Rahul'),
+(4, 'Divya'),
+(5, 'Arjun');
+
+INSERT INTO grades (grade_id, student_id, subject, score) VALUES
+(1, 1, 'Math', 95),
+(2, 1, 'Science', 90),
+(3, 2, 'Math', 85),
+(4, 2, 'Science', 78),
+(5, 3, 'Math', 88),
+(6, 3, 'Science', 92),
+(7, 4, 'Math', 65),
+(8, 4, 'Science', 70),
+(9, 5, 'Math', 90),
+(10, 5, 'Science', 93);
